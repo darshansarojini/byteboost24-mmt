@@ -16,8 +16,6 @@ considered travel modalities:
 - destination latitude: float
 - number of travelers: int
 - modality: str["car", "transit", "foot"]
-- duration: h
-- distance: km
 
 2. vertiports: pandas.DataFrame (nodes)
 - nodeid: int

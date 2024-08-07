@@ -52,7 +52,6 @@ considered travel modalities:
 - number of travelers: int (travelers)
 - trip cost: float ($$)
 - trip duration: float (h)
-- trip duration: float (h)
 - distance driving: float (km)
 - distance walking: float (km)
 - distance ground transit: float (km)

@@ -1,7 +1,7 @@
 from pyomo.environ import ConcreteModel, Var, Objective, Constraint, Binary, Set, Param, SolverFactory
 import math
 import networkx as nx
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 # Define coordinates for 10 nodes in an irregular layout
 node_coordinates = {
@@ -111,8 +111,8 @@ for e in edges:
 # Get positions from the graph
 pos = nx.get_node_attributes(G, 'pos')
 
-# Draw the graph
-plt.figure(figsize=(10, 7))
-nx.draw(G, pos, with_labels=True, node_size=500, node_color='lightblue', edge_color='gray', font_size=16, font_weight='bold', width=2)
-plt.title("Optimal Network Visualization")
-plt.show()
+# # Draw the graph
+# plt.figure(figsize=(10, 7))
+# nx.draw(G, pos, with_labels=True, node_size=500, node_color='lightblue', edge_color='gray', font_size=16, font_weight='bold', width=2)
+# plt.title("Optimal Network Visualization")
+# plt.show()

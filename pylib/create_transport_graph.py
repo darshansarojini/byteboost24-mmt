@@ -101,3 +101,31 @@ def create_transport_graph_distance(
                 )
 
     return G
+
+
+def create_transport_graph_cost(
+    distance_graph: nx.DiGraph,
+    params: dict,
+) -> nx.DiGraph:
+
+    G = distance_graph.copy()
+    for u, v, d in G.edges(data=True):
+        marginal_cost = params.get(f"{d['modality']} marginal cost", 0)
+        base_cost = params.get(f"{d['modality']} base cost", 0)
+        d["weight"] = d["weight"] * marginal_cost + base_cost
+
+    return G
+
+
+def create_transport_graph_time(
+    distance_graph: nx.DiGraph,
+    params: dict,
+) -> nx.DiGraph:
+
+    G = distance_graph.copy()
+    for u, v, d in G.edges(data=True):
+        speed = params.get(f"{d['modality']} speed")
+        boarding_time = params.get(f"{d['modality']} boarding time", 0)
+        d["weight"] = d["weight"] / speed + boarding_time
+
+    return G

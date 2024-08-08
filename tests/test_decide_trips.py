@@ -20,3 +20,5 @@ def test_decide_trips():
 
     res = decide_trips(trips, vertiports, routes, params)
     print(res)
+
+

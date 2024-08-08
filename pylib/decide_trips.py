@@ -11,9 +11,8 @@ from .create_transport_graph import (
 )
 
 
-def load_trips_from_csv(
-    filename: str, params: typing.Dict[str, typing.Any]
-) -> pd.DataFrame:
+def load_trips_from_csv(params: typing.Dict[str, typing.Any]) -> pd.DataFrame:
+    filename = "https://raw.githubusercontent.com/darshansarojini/byteboost24-mmt/3c897e6d19acd40fc4e16e20ccef918b3f726fa7/trip_info.csv"
     df = (
         pd.read_csv(filename)
         .rename(

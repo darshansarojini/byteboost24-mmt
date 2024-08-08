@@ -30,13 +30,15 @@ def decide_trips(
 ) -> pd.DataFrame:
 
     res = trips.copy()
-    res["distance"] = list(it.starmap(
-        geodesic_kilometers,
-        zip(
-            zip(res["origin latitude"], res["origin longitude"]),
-            zip(res["destination latitude"], res["destination longitude"]),
+    res["distance"] = list(
+        it.starmap(
+            geodesic_kilometers,
+            zip(
+                zip(res["origin latitude"], res["origin longitude"]),
+                zip(res["destination latitude"], res["destination longitude"]),
+            ),
         )
-    ))
+    )
 
     res["distance driving"] = res["distance"]
     res["distance ground transit"] = 0.0
@@ -46,8 +48,10 @@ def decide_trips(
     res["trip cost"] = (
         res["distance driving"].astype(bool) * params["driving base cost"]
         + res["distance driving"] * params["driving marginal cost"]
-        + res["distance ground transit"].astype(bool) * params["ground transit base cost"]
-        + res["distance ground transit"] * params["ground transit marginal cost"]
+        + res["distance ground transit"].astype(bool)
+        * params["ground transit base cost"]
+        + res["distance ground transit"]
+        * params["ground transit marginal cost"]
         + res["distance evtol"].astype(bool) * params["evtol base cost"]
         + res["distance evtol"] * params["evtol marginal cost"]
     )
@@ -74,4 +78,4 @@ def decide_trips(
             "distance ground transit",
             "distance evtol",
         ]
-  ].reset_index(drop=True)
+    ].reset_index(drop=True)

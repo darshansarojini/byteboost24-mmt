@@ -79,60 +79,72 @@ def decide_trips(
     params: typing.Dict[str, typing.Any],
 ) -> pd.DataFrame:
 
-    res = trips.copy()
-
     G = create_transport_graph_distance(trips, vertiports, routes)
+
     G_time = create_transport_graph_time(G, params)
     time_paths = dict(nx.all_pairs_dijkstra_path(G_time))
 
     G_cost = create_transport_graph_cost(G, params)
     cost_paths = dict(nx.all_pairs_dijkstra_path(G_cost))
 
-    distance_driving = []
-    distance_ground_transit = []
-    distance_evtol = []
-    distance_walking = []
-    for source_nodeid, target_nodeid in res[
-        ["source nodeid", "target nodeid"]
-    ].values:
-        path = time_paths[source_nodeid][target_nodeid]
-        distance_driving.append(
-            sum(
-                G.get_edge_data(path[i], path[i + 1])["weight"]
-                for i in range(len(path) - 1)
-                if G.get_edge_data(path[i], path[i + 1])["modality"]
-                == "driving"
+    contents = []
+    for paths, frac in zip(
+        [time_paths, cost_paths],
+        [
+            1 - params["fraction cost sensitive travelers"],
+            params["fraction cost sensitive travelers"],
+        ],
+    ):
+        df = trips.copy()
+        distance_driving = []
+        distance_ground_transit = []
+        distance_evtol = []
+        distance_walking = []
+        for source_nodeid, target_nodeid in df[
+            ["source nodeid", "target nodeid"]
+        ].values:
+            path = paths[source_nodeid][target_nodeid]
+            distance_driving.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "driving"
+                )
             )
-        )
-        distance_ground_transit.append(
-            sum(
-                G.get_edge_data(path[i], path[i + 1])["weight"]
-                for i in range(len(path) - 1)
-                if G.get_edge_data(path[i], path[i + 1])["modality"]
-                == "ground transit"
+            distance_ground_transit.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "ground transit"
+                )
             )
-        )
-        distance_evtol.append(
-            sum(
-                G.get_edge_data(path[i], path[i + 1])["weight"]
-                for i in range(len(path) - 1)
-                if G.get_edge_data(path[i], path[i + 1])["modality"] == "evtol"
+            distance_evtol.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "evtol"
+                )
             )
-        )
-        distance_walking.append(
-            sum(
-                G.get_edge_data(path[i], path[i + 1])["weight"]
-                for i in range(len(path) - 1)
-                if G.get_edge_data(path[i], path[i + 1])["modality"]
-                == "walking"
+            distance_walking.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "walking"
+                )
             )
-        )
 
-    res["distance driving"] = distance_driving
-    res["distance ground transit"] = distance_ground_transit
-    res["distance evtol"] = distance_evtol
-    res["distance walking"] = distance_walking
+        df["distance driving"] = distance_driving
+        df["distance ground transit"] = distance_ground_transit
+        df["distance evtol"] = distance_evtol
+        df["distance walking"] = distance_walking
+        df["number of travelers"] = df["number of travelers"] * frac
+        contents.append(df)
 
+    res = pd.concat(contents, ignore_index=True)
     res["trip cost"] = (
         res["distance driving"].astype(bool) * params["driving base cost"]
         + res["distance driving"] * params["driving marginal cost"]

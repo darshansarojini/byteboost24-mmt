@@ -79,7 +79,13 @@ def create_transport_graph_distance(
                 ),
                 dtype=float,
             )
-            closest = np.argpartition(trip_source_distances, 3)[:3]
+            numclosest = min(3, len(trip_source_distances))
+            if numclosest == 1:
+                closest = [0]
+            else:
+                closest = np.argpartition(trip_source_distances, numclosest)[
+                    :numclosest
+                ]
 
             for modality in ["driving", "walking"]:
                 G.add_weighted_edges_from(

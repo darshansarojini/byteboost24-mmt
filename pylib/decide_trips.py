@@ -99,12 +99,13 @@ def decide_trips(
     cost_paths = dict(nx.all_pairs_dijkstra_path(G_cost))
 
     contents = []
-    for paths, frac in zip(
+    for paths, frac, cost_sensitive in zip(
         [time_paths, cost_paths],
         [
             1 - params["fraction cost sensitive travelers"],
             params["fraction cost sensitive travelers"],
         ],
+        [False, True],
     ):
         df = trips.copy()
         distance_driving = []
@@ -153,6 +154,7 @@ def decide_trips(
         df["distance evtol"] = distance_evtol
         df["distance walking"] = distance_walking
         df["number of travelers"] = df["number of travelers"] * frac
+        df["cost sensitive"] = cost_sensitive
         contents.append(df)
 
     res = pd.concat(contents, ignore_index=True)
@@ -177,6 +179,7 @@ def decide_trips(
 
     return res[
         [
+            "cost sensitive",
             "origin longitude",
             "origin latitude",
             "destination longitude",

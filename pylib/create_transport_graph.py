@@ -66,7 +66,7 @@ def create_transport_graph_distance(
             vertiports["source nodeid"],
             vertiports["distance"],
         ),
-        modality="vtol",
+        modality="evtol",
     )
 
     # connect vertiport nodes to transit nodes

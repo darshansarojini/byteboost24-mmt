@@ -4,4 +4,4 @@ set -e
 
 cd "$(dirname $0)"
 
-ruff --ignore=E501 .
+ruff check --ignore=E501 .

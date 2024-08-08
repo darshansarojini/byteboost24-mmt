@@ -47,7 +47,7 @@ def make_dummy_vertiports(trips: pd.DataFrame) -> pd.DataFrame:
         [17, 39.9952152570, -121.3653115969],
         [18, 39.6281277813, -121.8927546903],
     ]
-    df = pd.DataFrame(data, columns=["NodeID", "Latitude", "Longitude"])
+    df = pd.DataFrame(data, columns=["nodeid", "latitude", "longitude"])
     return df
 
 

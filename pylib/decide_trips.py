@@ -11,6 +11,18 @@ from .create_transport_graph import (
 )
 
 
+def load_vertiports_from_csv() -> pd.DataFrame:
+    filename = "https://raw.githubusercontent.com/darshansarojini/byteboost24-mmt/f022ea7285ecea6a088fd6f87d1cd31bef2e4a72/top_blockg.csv"
+    res = pd.read_csv(filename).rename(
+        columns={
+            "lon": "longitude",
+            "lat": "latitude",
+        }
+    )
+    res["nodeid"] = res.index
+    return res[["nodeid", "latitude", "longitude"]].reset_index(drop=True)
+
+
 def load_trips_from_csv(params: typing.Dict[str, typing.Any]) -> pd.DataFrame:
     filename = "https://raw.githubusercontent.com/darshansarojini/byteboost24-mmt/3c897e6d19acd40fc4e16e20ccef918b3f726fa7/trip_info.csv"
     df = (

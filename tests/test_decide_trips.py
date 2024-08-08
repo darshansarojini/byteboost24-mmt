@@ -1,5 +1,6 @@
 from pylib.decide_trips import (
     load_trips_from_csv,
+    load_vertiports_from_csv,
     decide_trips,
 )
 from pylib.decide_trips_testing import (
@@ -7,6 +8,10 @@ from pylib.decide_trips_testing import (
     make_dummy_vertiports,
     make_dummy_routes,
 )
+
+
+def test_load_vertiports_from_csv():
+    print(load_vertiports_from_csv())
 
 
 def test_decide_trips():

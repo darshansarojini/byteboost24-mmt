@@ -98,7 +98,7 @@ def decide_trips(
         path = time_paths[source_nodeid][target_nodeid]
         distance_driving.append(
             sum(
-                G.get_edge_data(path[i], path[i + 1])["distance"]
+                G.get_edge_data(path[i], path[i + 1])["weight"]
                 for i in range(len(path) - 1)
                 if G.get_edge_data(path[i], path[i + 1])["modality"]
                 == "driving"
@@ -106,7 +106,7 @@ def decide_trips(
         )
         distance_ground_transit.append(
             sum(
-                G.get_edge_data(path[i], path[i + 1])["distance"]
+                G.get_edge_data(path[i], path[i + 1])["weight"]
                 for i in range(len(path) - 1)
                 if G.get_edge_data(path[i], path[i + 1])["modality"]
                 == "ground transit"
@@ -114,14 +114,14 @@ def decide_trips(
         )
         distance_evtol.append(
             sum(
-                G.get_edge_data(path[i], path[i + 1])["distance"]
+                G.get_edge_data(path[i], path[i + 1])["weight"]
                 for i in range(len(path) - 1)
                 if G.get_edge_data(path[i], path[i + 1])["modality"] == "evtol"
             )
         )
         distance_walking.append(
             sum(
-                G.get_edge_data(path[i], path[i + 1])["distance"]
+                G.get_edge_data(path[i], path[i + 1])["weight"]
                 for i in range(len(path) - 1)
                 if G.get_edge_data(path[i], path[i + 1])["modality"]
                 == "walking"
@@ -149,7 +149,7 @@ def decide_trips(
         + res["distance ground transit"] / params["ground transit speed"]
         + res["distance evtol"] / params["evtol speed"]
         + res["distance evtol"].astype(bool) * params["evtol boarding time"]
-        + res["distance walking"] / params["foot speed"]
+        + res["distance walking"] / params["walking speed"]
     )
 
     return res[

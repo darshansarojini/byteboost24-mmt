@@ -14,7 +14,7 @@ def get_default_params() -> typing.Dict[str, typing.Any]:
         "ground transit marginal cost": float(0.50),  # ($/km)
         "ground transit boarding time": float(0.05),  # (h)
         "ground transit speed": float(65),  # (km/h)
-        "foot speed": float(5),  # (5km/h)
+        "walking speed": float(5),  # (5km/h)
         "evtol base cost": float(0),  #  ($)
         "evtol marginal cost": float(0),  # ($/km)
         "evtol speed": float(240),  # (km/h)

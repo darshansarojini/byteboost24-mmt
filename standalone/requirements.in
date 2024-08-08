@@ -1,6 +1,0 @@
-geopy
-pandas
-
-ruff
-uv
-pytest

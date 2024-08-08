@@ -9,7 +9,9 @@ iniconfig==2.0.0
 networkx==3.3
     # via -r requirements.in
 numpy==2.0.1
-    # via pandas
+    # via
+    #   -r requirements.in
+    #   pandas
 packaging==24.1
     # via pytest
 pandas==2.2.2

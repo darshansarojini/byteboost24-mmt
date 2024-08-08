@@ -1,5 +1,6 @@
 geopy
 networkx
+numpy
 pandas
 
 ruff

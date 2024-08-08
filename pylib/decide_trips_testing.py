@@ -1,3 +1,4 @@
+import random
 import typing
 
 import pandas as pd
@@ -31,4 +32,18 @@ def make_dummy_vertiports(trips: pd.DataFrame) -> pd.DataFrame:
 
 
 def make_dummy_routes(vertiports: pd.DataFrame) -> pd.DataFrame:
-    return pd.DataFrame()
+    rand = random.Random(0)
+    vertiports["nodeid"] = range(len(vertiports))
+    routes = dict(
+        rand.sample(vertiports["nodeid"].to_list(), 2) for _ in range(10)
+    )
+
+    return pd.DataFrame(
+        [
+            {
+                "source nodeid": source,
+                "target nodeid": target,
+            }
+            for source, target in routes.items()
+        ]
+    )

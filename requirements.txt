@@ -6,6 +6,8 @@ geopy==2.4.1
     # via -r requirements.in
 iniconfig==2.0.0
     # via pytest
+networkx==3.3
+    # via -r requirements.in
 numpy==2.0.1
     # via pandas
 packaging==24.1

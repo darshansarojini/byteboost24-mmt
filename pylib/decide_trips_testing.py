@@ -3,6 +3,7 @@ import typing
 import pandas as pd
 import numpy as np
 
+
 def get_default_params() -> typing.Dict[str, typing.Any]:
     return {
         "driving base cost": float(5.0),  # ($/km)
@@ -23,13 +24,10 @@ def get_default_params() -> typing.Dict[str, typing.Any]:
     }
 
 
-
 def make_dummy_vertiports(trips: pd.DataFrame) -> pd.DataFrame:
-    file_path = 'make_dummy_nodes.csv'
-    df = pd.read_csv(file_path) 
+    file_path = "make_dummy_nodes.csv"
+    df = pd.read_csv(file_path)
     return df
-    
-    
 
 
 def make_dummy_routes(vertiports: pd.DataFrame) -> pd.DataFrame:

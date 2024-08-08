@@ -1,19 +1,21 @@
+import matplotlib.pyplot as plt
+import networkx as nx
 import numpy as np
 import pandas as pd
-from pyomo.environ import ConcreteModel, Var, Objective, Constraint, Set, Param, SolverFactory, Binary
-import math
-import networkx as nx
-import os
+from pyomo.environ import (
+    ConcreteModel,
+    Var,
+    Objective,
+    Constraint,
+    Set,
+    Param,
+    SolverFactory,
+    Binary,
+)
+
 from pylib.decide_trips import (
-    load_trips_from_csv,
     decide_trips,
 )
-from pylib.decide_trips_testing import (
-    get_default_params,
-    make_dummy_vertiports,
-    make_dummy_routes,
-)
-import matplotlib.pyplot as plt
 
 
 def edge_constraint(model):
@@ -29,7 +31,7 @@ def vertiport_route_optimization(trips, vertiports, routes, params):
     model = ConcreteModel()
 
     # Define nodes and edges
-    nodes = list(vertiports['NodeID'])
+    nodes = list(vertiports["nodeid"])
     edges = [(int(edge[0]), int(edge[1])) for edge in routes.to_numpy()]
 
     model.edges = Set(initialize=edges)
@@ -40,18 +42,20 @@ def vertiport_route_optimization(trips, vertiports, routes, params):
 
     # Define objective function
     def edge_costs(model, i, j):
-        this_edge_route = pd.DataFrame(data=np.array([[i, j]]), columns=['source nodeid', 'target nodeid'])
+        this_edge_route = pd.DataFrame(
+            data=np.array([[i, j]]), columns=["source nodeid", "target nodeid"]
+        )
         res = decide_trips(trips, vertiports, this_edge_route, params)
-        return np.sum(res['trip cost'])
+        return np.sum(res["trip cost"])
 
     model.costs = Param(model.edges, initialize=edge_costs)
-    model.obj = Objective(rule=linear_cost, sense='minimize')
+    model.obj = Objective(rule=linear_cost, sense="minimize")
 
     # Define constraints
     model.edge_constraint = Constraint(rule=edge_constraint)
 
     # Solve the problem
-    solver = SolverFactory('cbc')  # Use appropriate solver
+    solver = SolverFactory("cbc")  # Use appropriate solver
     result = solver.solve(model, tee=True)
 
     # Print results
@@ -65,9 +69,9 @@ def vertiport_route_optimization(trips, vertiports, routes, params):
 
     # Add nodes with positions
     for node in nodes:
-        node_df = vertiports.loc[vertiports['NodeID'] == node]
-        x = float(node_df['Latitude'])
-        y = float(node_df['Longitude'])
+        node_df = vertiports.loc[vertiports["nodeid"] == node]
+        x = float(node_df["latitude"])
+        y = float(node_df["longitude"])
         G.add_node(node, pos=(x, y))
 
     # Add edges based on the solution
@@ -76,11 +80,21 @@ def vertiport_route_optimization(trips, vertiports, routes, params):
             G.add_edge(e[0], e[1])
 
     # Get positions from the graph
-    pos = nx.get_node_attributes(G, 'pos')
+    pos = nx.get_node_attributes(G, "pos")
 
     # Draw the graph
     plt.figure(figsize=(10, 7))
-    nx.draw(G, pos, with_labels=True, node_size=500, node_color='lightblue', edge_color='gray', font_size=16, font_weight='bold', width=2)
+    nx.draw(
+        G,
+        pos,
+        with_labels=True,
+        node_size=500,
+        node_color="lightblue",
+        edge_color="gray",
+        font_size=16,
+        font_weight="bold",
+        width=2,
+    )
     plt.title("Optimal Network Visualization")
     plt.show()
 

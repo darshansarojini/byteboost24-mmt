@@ -1,16 +1,14 @@
-import os
+import random
+
+import pandas as pd
+
 from pylib.decide_trips import (
     load_trips_from_csv,
-    decide_trips,
 )
 from pylib.decide_trips_testing import (
     get_default_params,
 )
-from pylib.setup_vertiport_optimization import (
-    vertiport_route_optimization
-)
-import pandas as pd
-import random
+from pylib.setup_vertiport_optimization import vertiport_route_optimization
 
 
 def make_dummy_vertiports(trips: pd.DataFrame) -> pd.DataFrame:
@@ -35,7 +33,7 @@ def make_dummy_vertiports(trips: pd.DataFrame) -> pd.DataFrame:
         [17, 39.9952152570, -121.3653115969],
         [18, 39.6281277813, -121.8927546903],
     ]
-    df = pd.DataFrame(data, columns=["NodeID", "Latitude", "Longitude"])
+    df = pd.DataFrame(data, columns=["nodeid", "latitude", "longitude"])
     return df
 
 

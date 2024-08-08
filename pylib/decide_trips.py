@@ -1,22 +1,75 @@
-import itertools as it
 import typing
 
+import networkx as nx
+import numpy as np
 import pandas as pd
 
-from .util import geodesic_kilometers
+from .create_transport_graph import (
+    create_transport_graph_distance,
+    create_transport_graph_cost,
+    create_transport_graph_time,
+)
 
 
-def load_trips_from_csv(filename: str) -> pd.DataFrame:
-    res = pd.read_csv(filename).rename(
-        columns={
-            "origin_lon": "origin longitude",
-            "origin_lat": "origin latitude",
-            "destination_lon": "destination longitude",
-            "destination_lat": "destination latitude",
-        },
+def load_trips_from_csv(
+    filename: str, params: typing.Dict[str, typing.Any]
+) -> pd.DataFrame:
+    df = (
+        pd.read_csv(filename)
+        .rename(
+            columns={
+                # old data
+                "origin_lon": "origin longitude",
+                "origin_lat": "origin latitude",
+                "destination_lon": "destination longitude",
+                "destination_lat": "destination latitude",
+                # new data
+                "Lat_from": "origin latitude",
+                "Lon_from": "origin longitude",
+                "Lat_to": "destination latitude",
+                "Lon_to": "destination longitude",
+                "Trips_median": "number of travelers",
+            },
+        )
+        .dropna()
     )
-    res["number of travelers"] = 1
-    return res
+    driving = df.copy()
+    driving["modality"] = "driving"
+    driving["distance"] = driving["driving_time"] * params["driving speed"]
+
+    ground_transit = df.copy()
+    ground_transit["modality"] = "ground transit"
+    ground_transit["ground transit time"] = (
+        ground_transit["Walk_to_start_time"]
+        + ground_transit["Walk_from_end_time"]
+        + ground_transit["In_vehicle_time"]
+    )
+    ground_transit["distance"] = np.clip(
+        (
+            ground_transit["ground transit time"]
+            - params["ground transit boarding time"]
+        )
+        * params["ground transit speed"],
+        a_min=0.0,
+        a_max=None,
+    )
+
+    res = pd.concat([driving, ground_transit], ignore_index=True)
+    res["source nodeid"] = -res.index - 1
+    res["target nodeid"] = -res.index - 1 - len(res)
+    return res[
+        [
+            "source nodeid",
+            "target nodeid",
+            "origin longitude",
+            "origin latitude",
+            "destination longitude",
+            "destination latitude",
+            "number of travelers",
+            "distance",
+            "modality",
+        ]
+    ].reset_index(drop=True)
 
 
 def decide_trips(
@@ -26,22 +79,72 @@ def decide_trips(
     params: typing.Dict[str, typing.Any],
 ) -> pd.DataFrame:
 
-    res = trips.copy()
-    res["distance"] = list(
-        it.starmap(
-            geodesic_kilometers,
-            zip(
-                zip(res["origin latitude"], res["origin longitude"]),
-                zip(res["destination latitude"], res["destination longitude"]),
-            ),
-        )
-    )
+    G = create_transport_graph_distance(trips, vertiports, routes)
 
-    res["distance driving"] = res["distance"]
-    res["distance ground transit"] = 0.0
-    res["distance evtol"] = 0.0
-    res["distance walking"] = 0.0
+    G_time = create_transport_graph_time(G, params)
+    time_paths = dict(nx.all_pairs_dijkstra_path(G_time))
 
+    G_cost = create_transport_graph_cost(G, params)
+    cost_paths = dict(nx.all_pairs_dijkstra_path(G_cost))
+
+    contents = []
+    for paths, frac in zip(
+        [time_paths, cost_paths],
+        [
+            1 - params["fraction cost sensitive travelers"],
+            params["fraction cost sensitive travelers"],
+        ],
+    ):
+        df = trips.copy()
+        distance_driving = []
+        distance_ground_transit = []
+        distance_evtol = []
+        distance_walking = []
+        for source_nodeid, target_nodeid in df[
+            ["source nodeid", "target nodeid"]
+        ].values:
+            path = paths[source_nodeid][target_nodeid]
+            distance_driving.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "driving"
+                )
+            )
+            distance_ground_transit.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "ground transit"
+                )
+            )
+            distance_evtol.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "evtol"
+                )
+            )
+            distance_walking.append(
+                sum(
+                    G.get_edge_data(path[i], path[i + 1])["weight"]
+                    for i in range(len(path) - 1)
+                    if G.get_edge_data(path[i], path[i + 1])["modality"]
+                    == "walking"
+                )
+            )
+
+        df["distance driving"] = distance_driving
+        df["distance ground transit"] = distance_ground_transit
+        df["distance evtol"] = distance_evtol
+        df["distance walking"] = distance_walking
+        df["number of travelers"] = df["number of travelers"] * frac
+        contents.append(df)
+
+    res = pd.concat(contents, ignore_index=True)
     res["trip cost"] = (
         res["distance driving"].astype(bool) * params["driving base cost"]
         + res["distance driving"] * params["driving marginal cost"]
@@ -58,7 +161,7 @@ def decide_trips(
         + res["distance ground transit"] / params["ground transit speed"]
         + res["distance evtol"] / params["evtol speed"]
         + res["distance evtol"].astype(bool) * params["evtol boarding time"]
-        + res["distance walking"] / params["foot speed"]
+        + res["distance walking"] / params["walking speed"]
     )
 
     return res[

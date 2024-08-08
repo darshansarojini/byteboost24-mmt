@@ -6,3 +6,4 @@ pyomo
 ruff
 uv
 pytest
+setuptools

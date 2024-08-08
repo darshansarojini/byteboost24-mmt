@@ -16,6 +16,7 @@ def load_trips_from_csv(filename: str) -> pd.DataFrame:
         },
     )
     res["number of travelers"] = 1
+    res["modality"] = "driving"
     return res
 
 

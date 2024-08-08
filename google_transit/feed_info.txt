@@ -1,0 +1,2 @@
+feed_publisher_name,feed_publisher_url,feed_lang,default_lang,feed_start_date,feed_end_date,feed_version,feed_contact_email,feed_contact_url
+"B-Line",http://www.blinetransit.com,"en","en",20231219,20240622,"Winter-Spring 2024",info@bcag.org,http://www.blinetransit.com

@@ -1,0 +1,43 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_color,route_text_color
+de8a5235-df44-4241-823d-b110e0f26fdc,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"52","Chico Airport Express","Oro-Chico Airport Express",3,DC143C,000000
+e8a19258-d84e-4a13-823b-78521baf95cd,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"2","Mangrove","CTC & NVP via Mangrove / Cohasset",3,C71585,000000
+e2912325-76f2-4a66-a877-f16b7068bf73,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"4","First / East","CTC & NVP via First / East",3,9ACD32,000000
+8815245a-3438-48ae-a19c-7f9154c12720,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"25","Oro Dam","Oro Dam - Downtown",3,1E90FF,000000
+5c91d5af-5c6b-43c6-b8e2-233c2e8fe71c,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"7","Bruce / Manzanita","Lassen & Chico Mall via Bruce / Manzanita",3,BC8F8F,000000
+1c525842-dcea-48c0-a2f8-31160ce541e5,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"24","Thermalito","Thermalito - County Center",3,228B22,000000
+1cdbb73a-9eeb-4a06-b78b-e27d63f0e940,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"20","Chico - Oroville","Chico - Oroville via SR 70/99",3,FF0000,000000
+6f7803b8-4ac6-429e-9008-96ae221f52fc,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"32","Gridley - Chico","Gridley - Durham - Chico",3,8B4513,000000
+3fb9611e-a50d-4d04-8aa4-c70470e11827,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"41","Magalia - Chico","Magalia - Chico via Skyway",3,4169E1,000000
+7667b5f3-1421-4844-88d1-37d2f75842ac,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"9C","Cedar Loop","CTC via Cedar Loop",3,FF8C00,000000
+53aa313b-c010-4054-a248-83896fe7200a,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"5","E. 8th Street","CTC & Chico Mall via E. 8th Street",3,CD5C5C,000000
+8e1587ca-dace-4d77-8621-4a944f70b5f9,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"15","Esplanade / Lassen","CTC & North Chico via Esplanade / Lassen",3,006400,FFFFFF
+26967a7b-d130-4764-8588-67486481993e,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"26","Olive Highway","Olive Highway - Kelly Ridge",3,9370DB,000000
+d3fca436-9848-45a0-9041-dc2e870c4b52,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"40","Paradise - Chico","Paradise - Chico via Skyway",3,483D8B,000000
+5d6cbf73-cd94-4b81-97b9-37fd65a3191d,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"27","South Oroville","South Oroville - Las Plumas",3,FF1493,000000
+6d7b5989-f292-41c7-b7ab-35a17b12563d,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"30","Oroville - Biggs","Oroville - Gridley - Biggs",3,FFA500,000000
+9e387bbe-12fb-41da-9944-2c6ff2487901,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"9","Student Shuttle - Warner/Oak","CTC CSUC via Warner and Oak",3,FF8C00,000000
+392cd8aa-a3d1-488f-8040-3f507155a95c,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"8","Student Shuttle - Nord","CTC CSUC via Nord",3,9370DB,000000
+6984e7ed-b25e-4d08-8a03-28f4295864d0,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"3","Nord / East","CTC & NVP via Nord / East",3,6495ED,000000
+09279e71-ee36-41f5-b813-a81dd8609bae,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"14","Park/Forest/MLK","CTC to MLK via Forest clockwise loop",3,DC143C,000000
+3c333215-42f6-48c3-b42d-0e7fa5491466,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"16","Esplanade/SR99","CTC North via Esplanade/SR99",3,FFD700,000000
+5a6ab404-ddd5-445a-a98d-6cfa0dca2421,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"17","Park/Fair/Forest","CTC to Forest via Fair St, counter-clockwise loop",3,DAA520,000000
+1da6609f-b990-4c93-b375-fcef5b367e29,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"52","Chico Airport Express","Oro-Chico Airport Express",3,DC143C,000000
+ab6b4db8-bdb9-403a-87ca-1fa4997a8a08,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"41","Magalia - Chico","Magalia - Chico via Skyway",3,4169E1,000000
+c08a600b-8454-4051-9437-01b9dc436cf9,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"20","Chico - Oroville","Chico - Oroville via SR 70/99",3,FF0000,000000
+b215924d-9cdd-4fb9-a2d1-4d000b7e9970,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"32","Gridley - Chico","Gridley - Durham - Chico",3,8B4513,000000
+302984c6-5591-47ce-a1a0-6c6788a1152c,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"15","Esplanade / Lassen","CTC & North Chico via Esplanade / Lassen",3,006400,FFFFFF
+5cbcbdf9-62d4-4a33-812d-0a5b433b614f,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"17","Park/Fair/Forest","CTC to Forest via Fair St, counter-clockwise loop",3,DAA520,000000
+db2dc0b1-c8a3-4af4-b562-b24829cc5c35,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"4","First / East","CTC & NVP via First / East",3,9ACD32,000000
+23fe2e00-4a7c-464e-8058-a10b11a3d5de,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"5","E. 8th Street","CTC & Chico Mall via E. 8th Street",3,CD5C5C,000000
+27c599f9-a7c1-4f86-8fb1-51c28f09fc05,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"9C","Cedar Loop","CTC via Cedar Loop",3,FF8C00,000000
+5d4a39fc-239a-4a33-9d1e-28c906f3e22e,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"26","Olive Highway","Olive Highway - Kelly Ridge",3,9370DB,000000
+27c09fb5-7ebc-4401-bc4a-033f2056ca2a,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"24","Thermalito","Thermalito - County Center",3,228B22,000000
+f074bd2c-6b4a-46d3-a7c6-eb1a31658380,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"25","Oro Dam","Oro Dam - Downtown",3,1E90FF,000000
+5750e0ec-be0c-4a0e-81b3-21b9180752cf,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"2","Mangrove","CTC & NVP via Mangrove / Cohasset",3,C71585,000000
+72c03b5c-3179-4727-bd84-d74face8751a,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"40","Paradise - Chico","Paradise - Chico via Skyway",3,483D8B,000000
+f787f683-2583-41aa-a0fb-3d3d127a7f88,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"3","Nord / East","CTC & NVP via Nord / East",3,6495ED,000000
+8dd40b51-21e0-4361-b276-c67c75607586,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"16","Esplanade/SR99","CTC North via Esplanade/SR99",3,FFD700,000000
+7ec6ba2d-c7cf-42f9-8bbc-813781deb4a8,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"7","Bruce / Manzanita","Lassen & Chico Mall via Bruce / Manzanita",3,BC8F8F,000000
+595d04e2-5adc-48ee-9a53-789b04f94c2c,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"14","Park/Forest/MLK","CTC to MLK via Forest clockwise loop",3,DC143C,000000
+0f95895e-7a76-4a50-b897-a5bd9192a960,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"30","Oroville - Biggs","Oroville - Gridley - Biggs",3,FFA500,000000
+ba62f411-b74b-4215-968a-e5db959283fb,97aff62a-ed6d-4bd2-a9c8-d63f8e98a358,"27","South Oroville","South Oroville - Las Plumas",3,FF1493,000000

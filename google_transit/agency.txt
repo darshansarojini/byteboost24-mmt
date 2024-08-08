@@ -1,0 +1,2 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url,agency_email
+"97aff62a-ed6d-4bd2-a9c8-d63f8e98a358","B-Line","http://blinetransit.com","America/Los_Angeles","en","530-342-0221","http://blinetransit.com/Rider-Tools/Fares--Purchasing-Loactions","info@bcag.org"

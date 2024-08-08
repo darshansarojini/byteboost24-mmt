@@ -18,6 +18,8 @@ def test_decide_trips():
     trips = load_trips_from_csv(trips_file, params)
     vertiports = make_dummy_vertiports(trips)
     routes = make_dummy_routes(vertiports)
+    assert set(routes["source nodeid"]) <= set(vertiports["nodeid"])
+    assert set(routes["target nodeid"]) <= set(vertiports["nodeid"])
 
     res = decide_trips(trips, vertiports, routes, params)
     print(res)

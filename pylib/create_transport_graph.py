@@ -28,20 +28,22 @@ def create_transport_graph_distance(
 
     vertiports = vertiports.copy()
     vertiports.reset_index(drop=True, inplace=True)
-    vertiports["nodeid"] = 2 * len(trips) + vertiports.index
+    vertiports["nodeid"] = vertiports.index
 
     # add vertiport nodes and edges to the graph
+    longitude_lookup = dict(zip(vertiports["nodeid"], vertiports["longitude"]))
+    latitude_lookup = dict(zip(vertiports["nodeid"], vertiports["latitude"]))
     routes["source longitude"] = routes["source nodeid"].map(
-        vertiports.set_index("nodeid")["longitude"]
+        longitude_lookup,
     )
     routes["source latitude"] = routes["source nodeid"].map(
-        vertiports.set_index("nodeid")["latitude"]
+        latitude_lookup,
     )
     routes["target longitude"] = routes["target nodeid"].map(
-        vertiports.set_index("nodeid")["longitude"]
+        longitude_lookup,
     )
     routes["target latitude"] = routes["target nodeid"].map(
-        vertiports.set_index("nodeid")["latitude"]
+        latitude_lookup,
     )
     routes["distance"] = list(
         it.starmap(
@@ -54,15 +56,15 @@ def create_transport_graph_distance(
     )
     G.add_weighted_edges_from(
         zip(
-            vertiports["target nodeid"],
-            vertiports["source nodeid"],
-            vertiports["distance"],
+            routes["target nodeid"],
+            routes["source nodeid"],
+            routes["distance"],
         ),
         modality="evtol",
     )
 
     # connect vertiport nodes to transit nodes
-    for what in "modality" in ["source", "target"]:
+    for what in ["source", "target"]:
         for _, row in vertiports.iterrows():
             trip_source_distances = np.fromiter(
                 it.starmap(
@@ -74,21 +76,26 @@ def create_transport_graph_distance(
                         ),
                         it.repeat((row["latitude"], row["longitude"])),
                     ),
-                )
+                ),
+                dtype=float,
             )
-            closest = np.argpartition(trip_source_distances)[:3]
+            closest = np.argpartition(trip_source_distances, 3)[:3]
 
             for modality in ["driving", "walking"]:
                 G.add_weighted_edges_from(
-                    it.repeat(row["nodeid"]),
-                    routes.loc[closest, f"{what} nodeid"],
-                    trip_source_distances[closest],
+                    zip(
+                        it.repeat(row["nodeid"]),
+                        routes.loc[closest, f"{what} nodeid"],
+                        trip_source_distances[closest],
+                    ),
                     modality=modality,
                 )
                 G.add_weighted_edges_from(
-                    routes.loc[closest, f"{what} nodeid"],
-                    it.repeat(row["nodeid"]),
-                    trip_source_distances[closest],
+                    zip(
+                        routes.loc[closest, f"{what} nodeid"],
+                        it.repeat(row["nodeid"]),
+                        trip_source_distances[closest],
+                    ),
                     modality=modality,
                 )
 

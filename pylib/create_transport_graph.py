@@ -12,14 +12,6 @@ def create_transport_graph_distance(
     routes: pd.DataFrame,
 ) -> nx.DiGraph:
 
-    # assign node ids
-    assert (0 <= trips["source nodeid"]).all() and (
-        0 <= trips["target nodeid"]
-    ).all()
-    trips.reset_index(drop=True, inplace=True)
-    trips["source nodeid"] = -trips.index - 1
-    trips["target nodeid"] = -trips.index - 1 - len(trips)
-
     # create distance graph
     G = nx.DiGraph()
 

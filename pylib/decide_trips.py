@@ -1,12 +1,9 @@
 import itertools as it
 import typing
 
-from geopy.distance import geodesic
 import pandas as pd
 
-
-def geodesic_kilometers(*args) -> float:
-    return geodesic(*args).kilometers
+from .util import geodesic_kilometers
 
 
 def load_trips_from_csv(filename: str) -> pd.DataFrame:

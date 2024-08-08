@@ -1,5 +1,6 @@
 geopy
 pandas
+pyomo
 
 ruff
 uv

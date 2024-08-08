@@ -25,6 +25,7 @@ def get_default_params() -> typing.Dict[str, typing.Any]:
     }
 
 
+
 def make_dummy_vertiports(trips: pd.DataFrame) -> pd.DataFrame:
     data = [
         [0, 39.7332951667, -121.5952684164],

@@ -19,7 +19,7 @@ from pylib.decide_trips import (
 
 
 def edge_constraint(model):
-    return sum(model.x[e] for e in model.edges) >= 1
+    return sum(model.x[e] for e in model.edges) >= 2
 
 
 def linear_cost(model):
@@ -46,7 +46,12 @@ def vertiport_route_optimization(trips, vertiports, routes, params):
             data=np.array([[i, j]]), columns=["source nodeid", "target nodeid"]
         )
         res = decide_trips(trips, vertiports, this_edge_route, params)
-        return np.sum(res["trip cost"])
+
+        cost = res.loc[res["cost sensitive"], "trip cost"]
+        time = res.loc[~res["cost sensitive"], "trip duration"]
+
+        return np.sum(cost) + np.sum(time)
+
 
     model.costs = Param(model.edges, initialize=edge_costs)
     model.obj = Objective(rule=linear_cost, sense="minimize")
